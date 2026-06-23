@@ -63,7 +63,7 @@ mv $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
-CHECK_DB=$(mongosh --quiet --eval 'db.getMongo().getDBNames().indexOf("your_database_name")')
+CHECK_DB=$(mongosh --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $CHECK_DB -lt 0 ]; then
     mongosh --host mongodb.tzpcsystems.xyz </app/db/master-data.js
 else
