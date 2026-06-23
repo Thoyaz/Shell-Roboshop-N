@@ -54,11 +54,13 @@ VALIDATE $? "Cleaning /app directory"
 unzip /tmp/catalogue.zip
 VALIDATE $? "Extracting catalogue zip file"
 
-cd /app 
 npm install 
 
 mv $CURRENT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 systemctl daemon-reload
+systemctl enable catalogue  &>>$LOGS_FILE
+systemctl start catalogue
+VALIDATE $? "Starting and enabling catalogue"
 
 mv $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
