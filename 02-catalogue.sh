@@ -8,6 +8,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+MONGO_SERVER="mongodb.tzpcsystems.xyz"
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script with root user access $N" | tee -a $LOGS_FILE
@@ -63,9 +64,9 @@ mv $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
-CHECK_DB=$(mongosh --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-if [ $CHECK_DB -lt 0 ]; then
-    mongosh --host mongodb.tzpcsystems.xyz </app/db/master-data.js
+CHECK_DB=$(mongosh --host $MONGO_SERVER --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+if [ $CHECK_DB -le 0 ]; then
+    mongosh --host $MONGO_SERVER </app/db/master-data.js
 else
     echo -e "$Y Database already exists $N" | tee -a $LOGS_FILE
 fi
