@@ -64,7 +64,7 @@ dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
 CHECK_DB=$(mongosh --quiet --eval 'db.getMongo().getDBNames().indexOf("your_database_name")')
-if [ $CHECK_DB -le 0 ]; then
+if [ $CHECK_DB -lt 0 ]; then
     mongosh --host mongodb.tzpcsystems.xyz </app/db/master-data.js
 else
     echo -e "$Y Database already exists $N" | tee -a $LOGS_FILE
