@@ -1,8 +1,6 @@
 #!/bin/bash
 
 CURRENT_DIR=$(pwd)
-#!/bin/bash
-
 USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
