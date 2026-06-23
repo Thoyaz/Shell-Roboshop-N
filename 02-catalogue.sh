@@ -37,7 +37,7 @@ VALIDATE $? "Installing Node.js"
 
 id roboshop &>>$LOGS_FILE
 
-if [ $? -nq 0 ]; then
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "Adding roboshop system user"
 else
@@ -56,13 +56,13 @@ VALIDATE $? "Extracting catalogue zip file"
 
 npm install 
 
-mv $CURRENT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+cp $CURRENT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 systemctl daemon-reload
 systemctl enable catalogue  &>>$LOGS_FILE
 systemctl start catalogue
 VALIDATE $? "Starting and enabling catalogue"
 
-mv $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
