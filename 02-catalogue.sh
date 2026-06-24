@@ -66,9 +66,10 @@ cp $CURRENT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
-CHECK_DB=$(mongosh --host $MONGO_SERVER --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+CHECK_DB=$(mongosh --host $MONGO_SERVER --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $CHECK_DB -le 0 ]; then
     mongosh --host $MONGO_SERVER </app/db/master-data.js
+    VALIDATE $? "Loading products"
 else
     echo -e "$Y Database already exists $N" | tee -a $LOGS_FILE
 fi
