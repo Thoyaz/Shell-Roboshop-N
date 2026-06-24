@@ -67,6 +67,7 @@ dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Shell"
 
 CHECK_DB=$(mongosh --host $MONGO_SERVER --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+echo "checking if catalogue database exists: $CHECK_DB" | tee -a $LOGS_FILE
 if [ $CHECK_DB -le 0 ]; then
     mongosh --host $MONGO_SERVER </app/db/master-data.js
     VALIDATE $? "Loading products"
