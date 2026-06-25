@@ -54,9 +54,19 @@ cp $CURRENT_DIR/shipping.service /etc/systemd/system/shipping.service &>>$LOGS_F
 systemctl enable shipping 
 systemctl start shipping
 
-mysql -h ${MYSQL_SERVER} -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h ${MYSQL_SERVER} -uroot -pRoboShop@1 < /app/db/app-user.sql 
-mysql -h ${MYSQL_SERVER} -uroot -pRoboShop@1 < /app/db/master-data.sql
+dnf install mysql -y 
+
+
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
+if [ $? -ne 0 ]; then
+
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
+    VALIDATE $? "Loaded data into MySQL"
+else
+    echo -e "data is already loaded ... $Y SKIPPING $N"
+fi
 
 systemctl restart shipping
 VALIDATE $? "Starting shipping service"
