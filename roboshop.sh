@@ -63,7 +63,7 @@ do
 
     '
 
-    echo "Instance $instance created with ID: $INSTANCE_ID and Public IP: $IP"
+    echo "Instance $instance created with ID: $INSTANCE_ID and IP: $IP"
 
 done
 
