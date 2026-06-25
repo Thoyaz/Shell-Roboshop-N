@@ -1,9 +1,9 @@
 #!/bin/bash
 
-SG_ID="sg-0f976eea1cc69544e"
+SG_ID="sg-0ed5a7a31b401c5c1"
 AMI_ID="ami-0220d79f3f480ecf5"
-DOMAIN_NAME="tzpcsystems.xyz"
-DOMAIN_ZONE_ID="Z09050513PKGLFSE1JPOV"
+DOMAIN_NAME="tzpc.site"
+DOMAIN_ZONE_ID="Z09672091YAIYC4ECS2IK"
 
 for instance in $@
 do
